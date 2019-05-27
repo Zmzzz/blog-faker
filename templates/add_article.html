@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/jquery-3.3.1.js"></script>
+</head>
+
+<div>
+    <form action="/blog/backend/add_article/" method="post">
+        <div>
+            <label for="">文章标题
+                <input type="text">
+            </label>
+        </div>
+        <div>
+            <label for="">文章内容</label>
+        </div>
+          <textarea name="" id="article_content" cols="30" rows="10"></textarea>
+         <input type="submit" value="提交">
+    </form>
+</div>
+
+<body>
+<script src="/static/kindeditor/kindeditor-all.js"></script>
+<script src="/static/jquery-3.2.1.min.js"></script>
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+<script charset="utf-8" src="/editor/kindeditor.js"></script>
+<script>
+        KindEditor.ready(function(K) {
+                window.editor = K.create('#article_content',{
+                    uploadJson:'upload/',
+                    extraFileUploadParams : {
+                         csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
+                    }
+                });
+
+        });
+</script>
+
+</body>
+</html>

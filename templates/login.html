@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/sweetalert/sweetalert.css">
+</head>
+<body>
+<h1>这是登录页面</h1>
+<a href="/reg/">注册页面</a>
+<form action="" method="post">
+    {% csrf_token %}
+    <div>
+        用户名:
+        <input type="text" name="username" id="user">
+    </div>
+
+    <div>
+        密码：
+        <input id="pwd" type="password" name="password">
+    </div>
+    <div>
+        验证码：
+        <input type="text" name="valid_code" id="valid_code">
+
+    </div>
+    <div>
+        <img src="/get_valid_img/"  id="valid_img" >
+    </div>
+    <div>
+        <input type="button" value="提交" id="submit">
+    </div>
+</form>
+<script src="/static/jquery-3.3.1.js"></script>
+<script src="/static/setupajax.js"></script>
+<script src="/static/sweetalert/sweetalert.min.js"></script>
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+<script>
+    $('#submit').on('click',function () {
+        $.ajax(
+            {
+                url:'/login/',
+                type:'post',
+                data:{'username':$('#user').val(),'pwd':$('#pwd').val(),'valid_code':$('#valid_code').val()},
+                success:function (data) {
+                    if(data.status ===0 ){
+                    location.href=data.msg
+                } else{
+                    alert(data.msg)
+                }
+                }
+            }
+        )
+    });
+    $('#valid_img').on('click',function () {
+         $('#valid_img')[0].src+='?'
+    })
+</script>
+</body>
+</html>

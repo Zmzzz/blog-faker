@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user_obj.username }}的个人主页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/jquery-3.2.1.min.js"></script>
+    <script src="/static/setupajax.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/mystyle.css">
+    <link rel="stylesheet" href="/static/{{ user_obj.blog.theme }}">
+</head>
+<body>
+<div class="home-header">
+    <p>{{ user_obj.blog.title }}</p>
+</div>
+<div class="container">
+    <div class="row">
+        {#        左侧分类开始#}
+        <div class="col-md-2">
+          {% load my_tags %}
+
+           {% get_left_menu user_obj.username %}
+        </div>
+        {#        左侧分类结束#}
+        {#        中间文章部分开始#}
+        <div class="col-md-8">
+            {% block page-main %}
+            
+            {% endblock %}
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{#            文章分类#}
+            <div class="panel panel-primary">
+                <div class="panel-heading">文章分类</div>
+                <div class="panel-body">
+                    {% for category in category_list %}
+                        <div>
+                        {{ category.title }}({{ category.c }})
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+{#            标签分类#}
+             <div class="panel panel-primary">
+                <div class="panel-heading">标签分类</div>
+                <div class="panel-body">
+                     {% for tag in tag_list%}
+                        <div>
+                        {{ tag.title }}({{ tag.c }})
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+{#            日期分类#}
+             <div class="panel panel-primary">
+                <div class="panel-heading">日期分类</div>
+                <div class="panel-body">
+                    {% for time in time_list %}
+                      {{ time.time}}({{ time.c }})
+                    {% endfor %}
+                </div>
+            </div>

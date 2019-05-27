@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/mystyle.css/">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form action="/reg_ajax/" method="post" novalidate enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group {% if form_obj.username.errors.0 %}has-error{% endif %}">
+                    <label for="{{ form_obj.username.id_for_label }}" class="col-sm-2 control-label ">
+                        {{ form_obj.username.label }}
+                    </label>
+                    <div class="col-sm-10">
+                        {{ form_obj.username }}
+                        <span class="help-block">{{ form_obj.username.errors}}</span>
+                    </div>
+                </div>
+                <div class="form-group {% if form_obj.password.errors.0 %}has-error{% endif %}">
+                    <label for="{{ form_obj.password.id_for_label }}" class="col-sm-2 control-label">
+                        {{ form_obj.password.label }}
+                    </label>
+                    <div class="col-sm-10">
+                        {{ form_obj.password }}
+                        <span class="help-block">{{ form_obj.password.errors}}</span>
+                    </div>
+                </div>
+                <div class="form-group {% if form_obj.re_pwd.errors.0 %}has-error{% endif %}">
+                    <label for="{{ form_obj.re_pwd.id_for_label }}" class="col-sm-2 control-label">
+                        {{ form_obj.re_pwd.label }}
+                    </label>
+                    <div class="col-sm-10">
+                        {{ form_obj.re_pwd }}
+                        <span class="help-block">{{ form_obj.re_pwd.errors}}</span>
+                    </div>
+                </div>
+                <div class="form-group {% if form_obj.email.errors.0 %}has-error{% endif %}">
+                    <label for="{{ form_obj.email.id_for_label }}" class="col-sm-2 control-label">
+                        {{ form_obj.email.label }}
+                    </label>
+                    <div class="col-sm-10">
+                        {{ form_obj.email }}
+                        <span class="help-block">{{ form_obj.email.errors}}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">
+                        头像上传
+                    </label>
+                    <div class="col-sm-10">
+                        <label for="id_avatar">
+                            <img src="/static/default.jpg" id="avatar_img" >
+                        </label>
+                        <input type="file" id="id_avatar" name="avatar_file" class="hidden">
+                    </div>
+                </div>
+                <div class="form-group">
+                        <div class="col-sm-10 col-sm-offset-2">
+                            <input  id="btn_submit" type="button" class="btn btn-primary" value="提交">
+                        </div>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="/static/jquery-3.2.1.min.js"></script>
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+<script>
+{#    预览头像#}
+{#    头像图片文件发生改变，触发事件#}
+    $('#id_avatar').change(function () {
+{#        创建一个读取文件的对象#}
+        var FileReade=new FileReader();
+{#        取到当前选中的文件#}
+{#        console.log(this.files[0]);#}
+{#        读取选中的文件，#}
+        FileReade.readAsDataURL(this.files[0]);//读取文件是需要时间的
+{#        等待文件读取完毕#}
+        FileReade.onload=function () {
+            //读取完毕后，将上传的图片加载到src中
+            $('#avatar_img').attr('src',FileReade.result)
+        }
+    });
+
+{#    鼠标点击输入框是移除所有报错和input框颜色#}
+    $('form input').focus(function () {
+        $(this).parent().parent().removeClass('has-error');
+        $(this).next().text('')
+    })
+</script>
+{#ajax提交#}
+<script>
+    $('#btn_submit').on('click',function () {
+        var formdata=new FormData();
+        formdata.append('username',$('#id_username').val());
+        formdata.append('password',$('#id_password').val());
+        formdata.append('re_pwd',$('#id_re_pwd').val());
+        formdata.append('email',$('#id_email').val());
+        formdata.append('avatar',$('#id_avatar')[0].files[0]);
+        formdata.append('csrfmiddlewaretoken',$("[name='csrfmiddlewaretoken']").val());
+        $.ajax({
+            url:'/reg_ajax/',
+            type:'post',
+            processData:false,
+            contentType:false,
+            data: formdata,
+            success:function (data) {
+                if(data.status ===0 ){
+                    location.href=data.msg
+                } else{
+                    $.each(data.msg,function (k,v) {
+                       $('#id_'+k).next().text(v).parent().parent().addClass('has-error')
+                    })
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>

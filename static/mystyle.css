@@ -1,0 +1,67 @@
+/*头像设置大小*/
+#avatar_img{
+    width: 80px;
+    height: 80px;
+}
+
+/*前端获取头像在前端显示*/
+.auth_img{
+      width: 80px;
+    height: 80px;
+}
+/*文章底部的左右距离*/
+
+.media-bottom  span{
+    margin-left: 15px;
+}
+#s1{
+    margin-left: 0px;
+}
+
+/*个人主页博客标题*/
+.home-header{
+    height: 80px;
+    width: 100%;
+    background-color: blueviolet;
+}
+.home-header p{
+    color: white;
+   font-size: 20px;
+    padding: 20px 20px;
+}
+#div_digg {
+    float: right;
+    margin-bottom: 10px;
+    margin-right: 30px;
+    font-size: 12px;
+    width: 125px;
+    text-align: center;
+    margin-top: 10px;
+}
+.diggit {
+    float: left;
+    width: 46px;
+    height: 52px;
+    background: url('/media/up_down/upup.gif') no-repeat;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 2px;
+    padding-top: 5px;
+}
+.buryit {
+    float: right;
+    margin-left: 20px;
+    width: 46px;
+    height: 52px;
+    background: url("/media/up_down/downdown.gif") no-repeat;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 2px;
+    padding-top: 5px;
+}
+.clear {
+    clear: both;
+}
+.comment_item {
+    margin-right: 20px;
+}

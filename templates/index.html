@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>INDEX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/mystyle.css">
+</head>
+<body>
+{#导航栏开始#}
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Brand</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            {#      左边导航栏开始#}
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Link</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+            {#        右边导航栏开始#}
+            <ul class="nav navbar-nav navbar-right">
+                {#            用户已经登录#}
+                {% if request.user.username %}
+                    <li><a href="#">{{ request.user.username }}</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">个人中心 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/login_out/">注销</a></li>
+                    {#            用户未登录#}
+                {% else %}
+                    <li><a href="/login/">登录</a></li>
+                    <li><a href="/reg/">注册</a></li>
+                {% endif %}
+            </ul>
+            {#        右边导航栏结束#}
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+{#导航栏结束#}
+
+<div class="container">
+    <div class="row">
+        {#        左侧广告位置#}
+        <div class="col-md-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading">广告一</div>
+                <div class="panel-body">
+                    广告一内容
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">广告二</div>
+                <div class="panel-body">
+                    这是广告二的内容
+                </div>
+            </div>
+        </div>
+        {#        中间文章部分#}
+        <div class="col-md-8">
+            {% for article in all_article %}
+                <div class="article">
+                    <h3><a href="/blog/{{article.user.username}}/article/{{ article.pk}}">{{ article.title }}</a></h3>
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <img class="media-object auth_img" src="/media/{{ article.user.avatar}}" alt="...">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                           <p>{{ article.desc }}</p>
+                        </div>
+                        <div class="media-bottom">
+                            <span id="s1"><a href="/blog/{{article.user.username}}">{{ article.user.username }}</a>发布于</span>
+                            <span>{{ article.create_time |date:'Y-m-d H:i:s'}}</span>
+                            <span class=" glyphicon glyphicon-option-horizontal ">评论({{ article.comment_count }})</span>
+                            <span class="glyphicon glyphicon-thumbs-up">点赞({{ article.up_count}})</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {#        右侧广告部位#}
+        <div class="col-md-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading">广告一</div>
+                <div class="panel-body">
+                    这是广告一的内容
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">广告二</div>
+                <div class="panel-body">
+                    这是广告二的内容
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/static/jquery-3.2.1.min.js"></script>
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
